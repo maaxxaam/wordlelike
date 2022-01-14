@@ -1,0 +1,356 @@
+{
+	"name": "Event sheet 1",
+	"events": [
+		{
+			"eventType": "variable",
+			"name": "attempts",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 882437201012979
+		},
+		{
+			"eventType": "variable",
+			"name": "word",
+			"type": "string",
+			"initialValue": "легко",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 571164733966828
+		},
+		{
+			"eventType": "variable",
+			"name": "guess",
+			"type": "string",
+			"initialValue": "",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 556373490815652
+		},
+		{
+			"eventType": "variable",
+			"name": "guessed",
+			"type": "boolean",
+			"initialValue": "false",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 565622177935926
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "compare-eventvar",
+					"objectClass": "System",
+					"sid": 128776701642514,
+					"parameters": {
+						"variable": "attempts",
+						"comparison": 0,
+						"value": "6"
+					}
+				},
+				{
+					"id": "compare-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 541844374869228,
+					"parameters": {
+						"variable": "guessed"
+					},
+					"isInverted": true
+				},
+				{
+					"id": "trigger-once-while-true",
+					"objectClass": "System",
+					"sid": 848271317847141
+				}
+			],
+			"actions": [
+				{
+					"id": "set-enabled",
+					"objectClass": "TextInput",
+					"sid": 696260437871746,
+					"parameters": {
+						"mode": "disabled"
+					}
+				},
+				{
+					"id": "set-enabled",
+					"objectClass": "Button",
+					"sid": 722261714788689,
+					"parameters": {
+						"mode": "disabled"
+					}
+				},
+				{
+					"id": "alert",
+					"objectClass": "Browser",
+					"sid": 237884077386403,
+					"parameters": {
+						"message": "\"Попыток не осталось!\""
+					}
+				}
+			],
+			"sid": 148148181850989
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-clicked",
+					"objectClass": "Button",
+					"sid": 901933060690317
+				}
+			],
+			"actions": [],
+			"sid": 415765890325905,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-two-values",
+							"objectClass": "System",
+							"sid": 218956094461736,
+							"parameters": {
+								"first-value": "len(TextInput.Text)",
+								"comparison": 2,
+								"second-value": "5"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "alert",
+							"objectClass": "Browser",
+							"sid": 754857546520458,
+							"parameters": {
+								"message": "\"Введите слово из 5 букв!\""
+							}
+						}
+					],
+					"sid": 134756325543800
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "else",
+							"objectClass": "System",
+							"sid": 937708468883500
+						}
+					],
+					"actions": [
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 336838429367113,
+							"parameters": {
+								"variable": "guess",
+								"value": "TextInput.Text"
+							}
+						}
+					],
+					"sid": 125315797973527,
+					"children": [
+						{
+							"eventType": "variable",
+							"name": "loopi",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"isStatic": false,
+							"isConstant": false,
+							"sid": 555355743295531
+						},
+						{
+							"eventType": "variable",
+							"name": "letter",
+							"type": "string",
+							"initialValue": "",
+							"comment": "",
+							"isStatic": false,
+							"isConstant": false,
+							"sid": 727099004784171
+						},
+						{
+							"eventType": "variable",
+							"name": "state",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"isStatic": false,
+							"isConstant": false,
+							"sid": 958669578810833
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "for",
+									"objectClass": "System",
+									"sid": 735722073960117,
+									"parameters": {
+										"name": "\"guess\"",
+										"start-index": "0",
+										"end-index": "len(guess) - 1"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-eventvar-value",
+									"objectClass": "System",
+									"sid": 582668423627827,
+									"parameters": {
+										"variable": "loopi",
+										"value": "loopindex"
+									}
+								},
+								{
+									"type": "script",
+									"script": "localVars.state = getState(runtime.globalVars.guess, runtime.globalVars.word, localVars.loopi);"
+								},
+								{
+									"id": "set-tile",
+									"objectClass": "colors",
+									"sid": 610782948867888,
+									"parameters": {
+										"tile-x": "loopindex",
+										"tile-y": "attempts",
+										"tile": "state",
+										"state": "normal"
+									}
+								},
+								{
+									"id": "create-object",
+									"objectClass": "System",
+									"sid": 229457349243548,
+									"parameters": {
+										"object-to-create": "Letter",
+										"layer": "0",
+										"x": "colors.TileToPositionX(loopi)",
+										"y": "colors.TileToPositionY(attempts)",
+										"create-hierarchy": false
+									}
+								},
+								{
+									"type": "script",
+									"script": "localVars.letter = getSymbol(runtime.globalVars.guess, localVars.loopi);"
+								},
+								{
+									"id": "set-text",
+									"objectClass": "Letter",
+									"sid": 145013589289403,
+									"parameters": {
+										"text": "letter"
+									}
+								}
+							],
+							"sid": 534225097603152
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "trigger-once-while-true",
+									"objectClass": "System",
+									"sid": 662228848598841
+								}
+							],
+							"actions": [
+								{
+									"id": "add-to-eventvar",
+									"objectClass": "System",
+									"sid": 790153714449435,
+									"parameters": {
+										"variable": "attempts",
+										"value": "1"
+									}
+								}
+							],
+							"sid": 683933623724182
+						}
+					]
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-eventvar",
+							"objectClass": "System",
+							"sid": 898638638742040,
+							"parameters": {
+								"variable": "word",
+								"comparison": 0,
+								"value": "guess"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-boolean-eventvar",
+							"objectClass": "System",
+							"sid": 415037708400662,
+							"parameters": {
+								"variable": "guessed",
+								"value": "true"
+							}
+						},
+						{
+							"id": "set-enabled",
+							"objectClass": "TextInput",
+							"sid": 252332513300111,
+							"parameters": {
+								"mode": "disabled"
+							}
+						},
+						{
+							"id": "set-enabled",
+							"objectClass": "Button",
+							"sid": 552582233191042,
+							"parameters": {
+								"mode": "disabled"
+							}
+						},
+						{
+							"id": "alert",
+							"objectClass": "Browser",
+							"sid": 815564825365808,
+							"parameters": {
+								"message": "\"Вы отгадали слово!\""
+							}
+						}
+					],
+					"sid": 855340468481134
+				}
+			]
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 441210353684721
+				}
+			],
+			"actions": [
+				{
+					"id": "set-max-length",
+					"objectClass": "TextInput",
+					"sid": 629438330986794,
+					"parameters": {
+						"max-length": "5"
+					}
+				}
+			],
+			"sid": 483854110980094
+		}
+	],
+	"sid": 319189347676033
+}
