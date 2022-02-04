@@ -1,0 +1,16 @@
+{
+	"name": "lvl_txt",
+	"plugin-id": "Text",
+	"sid": 781875336499129,
+	"isGlobal": false,
+	"instanceVariables": [
+		{
+			"name": "index",
+			"type": "number",
+			"desc": "",
+			"sid": 217031489273809
+		}
+	],
+	"behaviorTypes": [],
+	"effectTypes": []
+}

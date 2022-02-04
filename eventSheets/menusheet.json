@@ -1,0 +1,234 @@
+{
+	"name": "MenuSheet",
+	"events": [
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-loader-layout-complete",
+					"objectClass": "System",
+					"sid": 387352465072325
+				}
+			],
+			"actions": [
+				{
+					"id": "request-project-file",
+					"objectClass": "AJAX",
+					"sid": 371352083046715,
+					"parameters": {
+						"tag": "\"words\"",
+						"file": "words.json"
+					}
+				},
+				{
+					"id": "set-text",
+					"objectClass": "version",
+					"sid": 474038789656442,
+					"parameters": {
+						"text": "\"v\"&projectversion&\" - alpha\""
+					}
+				}
+			],
+			"sid": 562353726318937
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-completed",
+					"objectClass": "AJAX",
+					"sid": 693439032753581,
+					"parameters": {
+						"tag": "\"words\""
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "load",
+					"objectClass": "words",
+					"sid": 525370942956418,
+					"parameters": {
+						"json": "AJAX.LastData"
+					}
+				}
+			],
+			"sid": 763917607217782
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-tap-object",
+					"objectClass": "Touch",
+					"sid": 819357566928173,
+					"parameters": {
+						"object": "LvlBut"
+					}
+				},
+				{
+					"id": "pick-nth-instance",
+					"objectClass": "System",
+					"sid": 959590135482719,
+					"parameters": {
+						"object": "lvl_txt",
+						"instance": "LvlBut.IID"
+					}
+				},
+				{
+					"id": "compare-instance-variable",
+					"objectClass": "lvl_txt",
+					"sid": 863991265793901,
+					"parameters": {
+						"instance-variable": "index",
+						"comparison": 2,
+						"value": "UnlockedLvl"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 810820676010602,
+					"parameters": {
+						"variable": "SelectedLvl",
+						"value": "lvl_txt.index"
+					}
+				},
+				{
+					"id": "go-to-layout",
+					"objectClass": "System",
+					"sid": 206973126774894,
+					"parameters": {
+						"layout": "Game"
+					}
+				}
+			],
+			"sid": 738718952354825
+		},
+		{
+			"eventType": "variable",
+			"name": "SelectedLvl",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 654295304722381
+		},
+		{
+			"eventType": "variable",
+			"name": "UnlockedLvl",
+			"type": "number",
+			"initialValue": "1",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 886031099758276
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 673795768423866
+				}
+			],
+			"actions": [
+				{
+					"id": "spawn-objects",
+					"objectClass": "mm_layouter",
+					"sid": 865336414444241,
+					"parameters": {
+						"object": "LvlBut",
+						"match-size": "match",
+						"match-angle": "match",
+						"index-num": "-1",
+						"scale-wid-num": "-1",
+						"scale-hei-num": "-1"
+					}
+				},
+				{
+					"id": "spawn-objects",
+					"objectClass": "mm_layouter",
+					"sid": 149242516192230,
+					"parameters": {
+						"object": "lvl_txt",
+						"match-size": "match",
+						"match-angle": "match",
+						"index-num": "0",
+						"scale-wid-num": "-1",
+						"scale-hei-num": "-1"
+					}
+				},
+				{
+					"type": "comment",
+					"text": "have to wait dt here for items in layouter to spawn"
+				},
+				{
+					"id": "wait",
+					"objectClass": "System",
+					"sid": 613468723872846,
+					"parameters": {
+						"seconds": "dt"
+					}
+				}
+			],
+			"sid": 696120038198904,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "System",
+							"sid": 179164023520716,
+							"parameters": {
+								"object": "lvl_txt"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-text",
+							"objectClass": "lvl_txt",
+							"sid": 239041802766715,
+							"parameters": {
+								"text": "\"Lvl\"&lvl_txt.index + 1"
+							}
+						}
+					],
+					"sid": 177478694633173
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "System",
+							"sid": 484315880971574,
+							"parameters": {
+								"object": "LvlBut"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-animation",
+							"objectClass": "LvlBut",
+							"sid": 687794993039386,
+							"parameters": {
+								"animation": "LvlBut.IID < UnlockedLvl ? \"Unlocked\" : \"Locked\"",
+								"from": "beginning"
+							}
+						}
+					],
+					"sid": 351809092340295
+				}
+			]
+		}
+	],
+	"sid": 259599436445569
+}
