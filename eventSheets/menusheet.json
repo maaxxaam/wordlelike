@@ -21,11 +21,21 @@
 					}
 				},
 				{
-					"id": "set-text",
-					"objectClass": "version",
-					"sid": 474038789656442,
+					"id": "request-project-file",
+					"objectClass": "AJAX",
+					"sid": 976101897514800,
 					"parameters": {
-						"text": "\"v\"&projectversion&\" - alpha\""
+						"tag": "\"layouts\"",
+						"file": "layouts.json"
+					}
+				},
+				{
+					"id": "request-project-file",
+					"objectClass": "AJAX",
+					"sid": 101381784985446,
+					"parameters": {
+						"tag": "\"keyset\"",
+						"file": "keyset.json"
 					}
 				}
 			],
@@ -54,6 +64,54 @@
 				}
 			],
 			"sid": 763917607217782
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-completed",
+					"objectClass": "AJAX",
+					"sid": 821173605440874,
+					"parameters": {
+						"tag": "\"keyset\""
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "load",
+					"objectClass": "keyset",
+					"sid": 173307711033509,
+					"parameters": {
+						"json": "AJAX.LastData"
+					}
+				}
+			],
+			"sid": 543227824453220
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-completed",
+					"objectClass": "AJAX",
+					"sid": 921537076812516,
+					"parameters": {
+						"tag": "\"layouts\""
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "parse",
+					"objectClass": "JSON",
+					"sid": 970396607035463,
+					"parameters": {
+						"data": "AJAX.LastData"
+					}
+				}
+			],
+			"sid": 776530639853669
 		},
 		{
 			"eventType": "block",
@@ -137,6 +195,14 @@
 				}
 			],
 			"actions": [
+				{
+					"id": "set-text",
+					"objectClass": "version",
+					"sid": 431109142515290,
+					"parameters": {
+						"text": "\"v\"&projectversion&\" - alpha\""
+					}
+				},
 				{
 					"id": "spawn-objects",
 					"objectClass": "mm_layouter",
@@ -228,6 +294,27 @@
 					"sid": 351809092340295
 				}
 			]
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-parse-error",
+					"objectClass": "JSON",
+					"sid": 745822204983992
+				}
+			],
+			"actions": [
+				{
+					"id": "alert",
+					"objectClass": "Browser",
+					"sid": 514367685683437,
+					"parameters": {
+						"message": "\"Did not parse!\""
+					}
+				}
+			],
+			"sid": 139291481750946
 		}
 	],
 	"sid": 259599436445569

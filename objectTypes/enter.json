@@ -1,7 +1,7 @@
 {
-	"name": "pauseBut",
+	"name": "enter",
 	"plugin-id": "Sprite",
-	"sid": 682187226789239,
+	"sid": 776688477373808,
 	"isGlobal": false,
 	"instanceVariables": [],
 	"behaviorTypes": [],
@@ -11,19 +11,38 @@
 			{
 				"frames": [
 					{
-						"width": 128,
-						"height": 128,
-						"originX": 0.5,
+						"width": 72,
+						"height": 32,
+						"originX": 0.2222222222222222,
 						"originY": 0.5,
 						"originalSource": "",
 						"exportFormat": "png",
 						"exportQuality": 0.8,
-						"imageSpriteId": 3667640,
+						"imageSpriteId": 7346809,
+						"collisionPoly": {
+							"points": [
+								0,
+								0,
+								0.9988425219500506,
+								0,
+								1,
+								1,
+								0,
+								1
+							]
+						},
 						"useCollisionPoly": true,
+						"imagePoints": [
+							{
+								"name": "Left",
+								"x": 0,
+								"y": 0.5
+							}
+						],
 						"duration": 1
 					}
 				],
-				"sid": 832800957589206,
+				"sid": 720136200390632,
 				"name": "Animation 1",
 				"isLooping": false,
 				"isPingPong": false,

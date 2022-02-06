@@ -55,74 +55,22 @@
 			"eventType": "block",
 			"conditions": [
 				{
-					"id": "compare-eventvar",
-					"objectClass": "System",
-					"sid": 128776701642514,
+					"id": "on-tap-object",
+					"objectClass": "Touch",
+					"sid": 538554396922274,
 					"parameters": {
-						"variable": "attempts",
+						"object": "enter"
+					}
+				},
+				{
+					"id": "compare-two-values",
+					"objectClass": "System",
+					"sid": 692793204150705,
+					"parameters": {
+						"first-value": "Functions.canInput",
 						"comparison": 0,
-						"value": "6"
+						"second-value": "1"
 					}
-				},
-				{
-					"id": "compare-boolean-eventvar",
-					"objectClass": "System",
-					"sid": 541844374869228,
-					"parameters": {
-						"variable": "guessed"
-					},
-					"isInverted": true
-				},
-				{
-					"id": "trigger-once-while-true",
-					"objectClass": "System",
-					"sid": 848271317847141
-				}
-			],
-			"actions": [
-				{
-					"id": "set-enabled",
-					"objectClass": "TextInput",
-					"sid": 696260437871746,
-					"parameters": {
-						"mode": "disabled"
-					}
-				},
-				{
-					"id": "set-enabled",
-					"objectClass": "Button",
-					"sid": 722261714788689,
-					"parameters": {
-						"mode": "disabled"
-					}
-				},
-				{
-					"id": "alert",
-					"objectClass": "Browser",
-					"sid": 237884077386403,
-					"parameters": {
-						"message": "\"Попыток не осталось!\""
-					}
-				}
-			],
-			"sid": 148148181850989
-		},
-		{
-			"eventType": "block",
-			"conditions": [
-				{
-					"id": "on-clicked",
-					"objectClass": "Button",
-					"sid": 901933060690317
-				},
-				{
-					"id": "layer-is-visible",
-					"objectClass": "System",
-					"sid": 964628023234753,
-					"parameters": {
-						"layer": "\"Pause\""
-					},
-					"isInverted": true
 				}
 			],
 			"actions": [],
@@ -165,136 +113,14 @@
 					],
 					"actions": [
 						{
-							"id": "set-eventvar-value",
-							"objectClass": "System",
-							"sid": 336838429367113,
-							"parameters": {
-								"variable": "guess",
-								"value": "TextInput.Text"
-							}
+							"callFunction": "displayGuess",
+							"sid": 359397049056582,
+							"parameters": [
+								true
+							]
 						}
 					],
-					"sid": 125315797973527,
-					"children": [
-						{
-							"eventType": "variable",
-							"name": "loopi",
-							"type": "number",
-							"initialValue": "0",
-							"comment": "",
-							"isStatic": false,
-							"isConstant": false,
-							"sid": 555355743295531
-						},
-						{
-							"eventType": "variable",
-							"name": "letter",
-							"type": "string",
-							"initialValue": "",
-							"comment": "",
-							"isStatic": false,
-							"isConstant": false,
-							"sid": 727099004784171
-						},
-						{
-							"eventType": "variable",
-							"name": "state",
-							"type": "number",
-							"initialValue": "0",
-							"comment": "",
-							"isStatic": false,
-							"isConstant": false,
-							"sid": 958669578810833
-						},
-						{
-							"eventType": "block",
-							"conditions": [
-								{
-									"id": "for",
-									"objectClass": "System",
-									"sid": 735722073960117,
-									"parameters": {
-										"name": "\"guess\"",
-										"start-index": "0",
-										"end-index": "len(guess) - 1"
-									}
-								}
-							],
-							"actions": [
-								{
-									"id": "set-eventvar-value",
-									"objectClass": "System",
-									"sid": 582668423627827,
-									"parameters": {
-										"variable": "loopi",
-										"value": "loopindex"
-									}
-								},
-								{
-									"type": "script",
-									"script": "localVars.state = getState(runtime.globalVars.guess, runtime.globalVars.word, localVars.loopi);"
-								},
-								{
-									"id": "set-tile",
-									"objectClass": "colors",
-									"sid": 610782948867888,
-									"parameters": {
-										"tile-x": "loopindex",
-										"tile-y": "attempts",
-										"tile": "state",
-										"state": "normal"
-									}
-								},
-								{
-									"id": "create-object",
-									"objectClass": "System",
-									"sid": 229457349243548,
-									"parameters": {
-										"object-to-create": "Letter",
-										"layer": "0",
-										"x": "colors.TileToPositionX(loopi)",
-										"y": "colors.TileToPositionY(attempts)",
-										"create-hierarchy": false
-									}
-								},
-								{
-									"type": "script",
-									"script": "localVars.letter = getSymbol(runtime.globalVars.guess, localVars.loopi);"
-								},
-								{
-									"id": "set-text",
-									"objectClass": "Letter",
-									"sid": 145013589289403,
-									"parameters": {
-										"text": "letter"
-									}
-								}
-							],
-							"sid": 534225097603152
-						},
-						{
-							"eventType": "block",
-							"conditions": [
-								{
-									"id": "trigger-once-while-true",
-									"objectClass": "System",
-									"sid": 662228848598841
-								}
-							],
-							"actions": [
-								{
-									"id": "add-to-eventvar",
-									"objectClass": "System",
-									"sid": 790153714449435,
-									"parameters": {
-										"variable": "attempts",
-										"value": "1"
-									}
-								}
-							],
-							"sid": 683933623724182
-						}
-					]
+					"sid": 125315797973527
 				},
 				{
 					"eventType": "block",
@@ -357,6 +183,38 @@
 						}
 					],
 					"sid": 855340468481134
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "else",
+							"objectClass": "System",
+							"sid": 917462616159745
+						},
+						{
+							"id": "compare-two-values",
+							"objectClass": "System",
+							"sid": 697503197589151,
+							"parameters": {
+								"first-value": "Functions.canInput",
+								"comparison": 0,
+								"second-value": "1"
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "alert",
+							"objectClass": "Browser",
+							"sid": 506746583569329,
+							"parameters": {
+								"message": "\"Попыток не осталось!\""
+							}
+						}
+					],
+					"sid": 319068621414388
 				}
 			]
 		},
@@ -400,10 +258,10 @@
 				{
 					"id": "set-eventvar-value",
 					"objectClass": "System",
-					"sid": 820039514372393,
+					"sid": 270827886821418,
 					"parameters": {
 						"variable": "word",
-						"value": "words.At(SelectedLvl)"
+						"value": "uppercase(words.At(SelectedLvl, 0))"
 					}
 				},
 				{
@@ -413,6 +271,15 @@
 					"parameters": {
 						"variable": "letters_in_level",
 						"value": "len(word)"
+					}
+				},
+				{
+					"id": "set-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 174758226130916,
+					"parameters": {
+						"variable": "guessed",
+						"value": "false"
 					}
 				},
 				{
@@ -438,9 +305,75 @@
 					"parameters": {
 						"x": "(ViewportWidth(0) - colors.Width) / 2"
 					}
+				},
+				{
+					"callFunction": "Generate_keyboard",
+					"sid": 694755272212364,
+					"parameters": [
+						"words.At(SelectedLvl, 1)"
+					]
 				}
 			],
-			"sid": 483854110980094
+			"sid": 483854110980094,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for",
+							"objectClass": "System",
+							"sid": 107324137556189,
+							"parameters": {
+								"name": "\"ch\"",
+								"start-index": "0",
+								"end-index": "colors.MapDisplayHeight - 1"
+							}
+						}
+					],
+					"actions": [],
+					"sid": 242070946219418,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "for",
+									"objectClass": "System",
+									"sid": 160557435846743,
+									"parameters": {
+										"name": "\"cw\"",
+										"start-index": "0",
+										"end-index": "colors.MapDisplayWidth - 1"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "create-object",
+									"objectClass": "System",
+									"sid": 342874368154921,
+									"parameters": {
+										"object-to-create": "Letter",
+										"layer": "0",
+										"x": "colors.TileToPositionX(loopindex(\"cw\"))",
+										"y": "colors.TileToPositionY(loopindex(\"ch\"))",
+										"create-hierarchy": false
+									}
+								},
+								{
+									"id": "set-text",
+									"objectClass": "Letter",
+									"sid": 584422823782702,
+									"parameters": {
+										"text": "\"\""
+									}
+								}
+							],
+							"sid": 590043986395666
+						}
+					]
+				}
+			]
 		},
 		{
 			"eventType": "variable",
@@ -768,25 +701,9 @@
 			],
 			"actions": [
 				{
-					"id": "set-enabled",
-					"objectClass": "TextInput",
-					"sid": 348417927671232,
-					"parameters": {
-						"mode": "enabled"
-					}
-				},
-				{
-					"id": "set-enabled",
-					"objectClass": "Button",
-					"sid": 973612493485478,
-					"parameters": {
-						"mode": "enabled"
-					}
-				},
-				{
 					"id": "set-visible",
 					"objectClass": "TextInput",
-					"sid": 438142538707318,
+					"sid": 694898591806005,
 					"parameters": {
 						"visibility": "visible"
 					}
@@ -794,13 +711,682 @@
 				{
 					"id": "set-visible",
 					"objectClass": "Button",
-					"sid": 218822646931245,
+					"sid": 830543253479441,
 					"parameters": {
 						"visibility": "visible"
 					}
 				}
 			],
-			"sid": 863400741083713
+			"sid": 863400741083713,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-eventvar",
+							"objectClass": "System",
+							"sid": 983172302759855,
+							"parameters": {
+								"variable": "attempts",
+								"comparison": 2,
+								"value": "6"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-enabled",
+							"objectClass": "TextInput",
+							"sid": 883650300743562,
+							"parameters": {
+								"mode": "enabled"
+							}
+						},
+						{
+							"id": "set-enabled",
+							"objectClass": "Button",
+							"sid": 169137293217563,
+							"parameters": {
+								"mode": "enabled"
+							}
+						}
+					],
+					"sid": 996759003771557
+				}
+			]
+		},
+		{
+			"functionName": "Generate_keyboard",
+			"functionDescription": "",
+			"functionCategory": "Game",
+			"functionReturnType": "none",
+			"functionIsAsync": false,
+			"functionParameters": [
+				{
+					"name": "layout",
+					"type": "string",
+					"initialValue": "russian",
+					"comment": "",
+					"sid": 413314608489364
+				}
+			],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [
+				{
+					"id": "set-path",
+					"objectClass": "JSON",
+					"sid": 150626295342201,
+					"parameters": {
+						"path": "layout"
+					}
+				}
+			],
+			"sid": 177869752626660,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "JSON",
+							"sid": 816866225508134,
+							"parameters": {
+								"path": "\".appearance\""
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "create-object",
+							"objectClass": "System",
+							"sid": 499851266310706,
+							"parameters": {
+								"object-to-create": "keyboard_layouter",
+								"layer": "0",
+								"x": "JSON.Get(\".x\")",
+								"y": "JSON.Get(\".y\")",
+								"create-hierarchy": false
+							}
+						},
+						{
+							"id": "set-size",
+							"objectClass": "keyboard_layouter",
+							"sid": 451105330846445,
+							"parameters": {
+								"width": "JSON.Get(\".wd\")",
+								"height": "JSON.Get(\".ht\")"
+							}
+						},
+						{
+							"id": "set-cells-number",
+							"objectClass": "keyboard_layouter",
+							"sid": 703568633563385,
+							"parameters": {
+								"num": "JSON.Get(\".letters\")"
+							}
+						},
+						{
+							"id": "spawn-objects",
+							"objectClass": "keyboard_layouter",
+							"sid": 202567631411491,
+							"parameters": {
+								"object": "keyBut",
+								"match-size": "dont-match",
+								"match-angle": "match",
+								"index-num": "-1",
+								"scale-wid-num": "-1",
+								"scale-hei-num": "-1"
+							}
+						},
+						{
+							"id": "spawn-objects",
+							"objectClass": "keyboard_layouter",
+							"sid": 167267823610709,
+							"parameters": {
+								"object": "key_txt",
+								"match-size": "dont-match",
+								"match-angle": "match",
+								"index-num": "-1",
+								"scale-wid-num": "-1",
+								"scale-hei-num": "-1"
+							}
+						}
+					],
+					"sid": 909257417119641
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "trigger-once-while-true",
+							"objectClass": "System",
+							"sid": 152133488180651
+						}
+					],
+					"actions": [
+						{
+							"id": "set-position",
+							"objectClass": "enter",
+							"sid": 648374186576479,
+							"parameters": {
+								"x": "JSON.Get(\".enter.x\")",
+								"y": "JSON.Get(\".enter.y\")"
+							}
+						},
+						{
+							"id": "set-position",
+							"objectClass": "backspace",
+							"sid": 905312129658137,
+							"parameters": {
+								"x": "JSON.Get(\".backspace.x\")",
+								"y": "JSON.Get(\".backspace.y\")"
+							}
+						},
+						{
+							"id": "alert",
+							"objectClass": "Browser",
+							"sid": 784651368389017,
+							"disabled": true,
+							"parameters": {
+								"message": "JSON.Get(\".backspace.x\")&newline&backspace.X"
+							}
+						},
+						{
+							"id": "wait",
+							"objectClass": "System",
+							"sid": 978320594683833,
+							"parameters": {
+								"seconds": "dt"
+							}
+						}
+					],
+					"sid": 227209085309056,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "pick-by-comparison",
+									"objectClass": "System",
+									"sid": 647500066705629,
+									"parameters": {
+										"object": "key_txt_other",
+										"expression": "key_txt_other.Text",
+										"comparison": 0,
+										"value": "\"<\""
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-position-to-another-object",
+									"objectClass": "key_txt_other",
+									"sid": 220416268828905,
+									"parameters": {
+										"object": "backspace",
+										"image-point-optional": "\"Left\""
+									}
+								}
+							],
+							"sid": 360785839949789
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "pick-by-comparison",
+									"objectClass": "System",
+									"sid": 864523658745896,
+									"parameters": {
+										"object": "key_txt_other",
+										"expression": "key_txt_other.Text",
+										"comparison": 0,
+										"value": "\"Ввод\""
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-position-to-another-object",
+									"objectClass": "key_txt_other",
+									"sid": 485495054441944,
+									"parameters": {
+										"object": "enter",
+										"image-point-optional": "\"Left\""
+									}
+								}
+							],
+							"sid": 764217338368760
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "for-each",
+									"objectClass": "System",
+									"sid": 194155791284977,
+									"parameters": {
+										"object": "key_txt"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-text",
+									"objectClass": "key_txt",
+									"sid": 124262590161016,
+									"parameters": {
+										"text": "uppercase(keyset.At(key_txt.IID, JSON.Get(\".keyset\")))"
+									}
+								}
+							],
+							"sid": 281620698283570
+						}
+					]
+				}
+			]
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-tap-object",
+					"objectClass": "Touch",
+					"sid": 820574953779720,
+					"parameters": {
+						"object": "keyBut"
+					}
+				},
+				{
+					"id": "pick-overlapping-point",
+					"objectClass": "System",
+					"sid": 343873337435984,
+					"parameters": {
+						"object": "key_txt",
+						"x": "keyBut.X",
+						"y": "keyBut.Y"
+					}
+				},
+				{
+					"id": "compare-two-values",
+					"objectClass": "System",
+					"sid": 950933030833151,
+					"parameters": {
+						"first-value": "len(TextInput.Text)",
+						"comparison": 2,
+						"second-value": "letters_in_level"
+					}
+				},
+				{
+					"id": "compare-two-values",
+					"objectClass": "System",
+					"sid": 852913190248167,
+					"parameters": {
+						"first-value": "Functions.canInput",
+						"comparison": 0,
+						"second-value": "1"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "append-text",
+					"objectClass": "TextInput",
+					"sid": 954198132159767,
+					"parameters": {
+						"text": "key_txt.Text"
+					}
+				},
+				{
+					"callFunction": "displayGuess",
+					"sid": 639772369101131,
+					"parameters": [
+						false
+					]
+				}
+			],
+			"sid": 314903799100308
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-tap-object",
+					"objectClass": "Touch",
+					"sid": 902395053289124,
+					"parameters": {
+						"object": "backspace"
+					}
+				},
+				{
+					"id": "compare-two-values",
+					"objectClass": "System",
+					"sid": 189468911357239,
+					"parameters": {
+						"first-value": "Functions.canInput",
+						"comparison": 0,
+						"second-value": "1"
+					}
+				}
+			],
+			"actions": [
+				{
+					"type": "script",
+					"script": "var txt = runtime.objects.TextInput.getFirstInstance();\ntxt.text = txt.text.substr(0, txt.text.length - 1);"
+				},
+				{
+					"callFunction": "displayGuess",
+					"sid": 278347490299766,
+					"parameters": [
+						false
+					]
+				}
+			],
+			"sid": 849164397006394
+		},
+		{
+			"functionName": "displayGuess",
+			"functionDescription": "",
+			"functionCategory": "Game",
+			"functionReturnType": "none",
+			"functionIsAsync": false,
+			"functionParameters": [
+				{
+					"name": "final",
+					"type": "boolean",
+					"initialValue": "false",
+					"comment": "",
+					"sid": 865639561336557
+				}
+			],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 993256643539073,
+					"parameters": {
+						"variable": "guess",
+						"value": "uppercase(TextInput.Text)"
+					}
+				},
+				{
+					"type": "script",
+					"script": "runtime.globalVars.guess = runtime.globalVars.guess.substr(0, runtime.globalVars.letters_in_level)"
+				}
+			],
+			"sid": 690667926009031,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for",
+							"objectClass": "System",
+							"sid": 665368195044333,
+							"parameters": {
+								"name": "\"empty\"",
+								"start-index": "0",
+								"end-index": "letters_in_level - 1"
+							}
+						},
+						{
+							"id": "pick-nth-instance",
+							"objectClass": "System",
+							"sid": 847658586214404,
+							"parameters": {
+								"object": "Letter",
+								"instance": "loopindex(\"empty\") + attempts * letters_in_level"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-text",
+							"objectClass": "Letter",
+							"sid": 164085232387871,
+							"parameters": {
+								"text": "\"\""
+							}
+						}
+					],
+					"sid": 753456933168604
+				},
+				{
+					"eventType": "variable",
+					"name": "loopi",
+					"type": "number",
+					"initialValue": "0",
+					"comment": "",
+					"isStatic": false,
+					"isConstant": false,
+					"sid": 122869389376817
+				},
+				{
+					"eventType": "variable",
+					"name": "letter",
+					"type": "string",
+					"initialValue": "",
+					"comment": "",
+					"isStatic": false,
+					"isConstant": false,
+					"sid": 261453443217352
+				},
+				{
+					"eventType": "variable",
+					"name": "state",
+					"type": "number",
+					"initialValue": "0",
+					"comment": "",
+					"isStatic": false,
+					"isConstant": false,
+					"sid": 247549983880515
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for",
+							"objectClass": "System",
+							"sid": 475386553052445,
+							"parameters": {
+								"name": "\"guess\"",
+								"start-index": "0",
+								"end-index": "len(guess) = 0 ? 0: len(guess) - 1"
+							}
+						},
+						{
+							"id": "pick-nth-instance",
+							"objectClass": "System",
+							"sid": 915842048865049,
+							"parameters": {
+								"object": "Letter",
+								"instance": "loopindex(\"guess\") + attempts * letters_in_level"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 805654152795795,
+							"parameters": {
+								"variable": "loopi",
+								"value": "loopindex"
+							}
+						},
+						{
+							"type": "script",
+							"script": "localVars.letter = runtime.globalVars.guess[localVars.loopi];"
+						},
+						{
+							"id": "set-text",
+							"objectClass": "Letter",
+							"sid": 686192156296518,
+							"parameters": {
+								"text": "letter"
+							}
+						}
+					],
+					"sid": 351838723264141,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-boolean-eventvar",
+									"objectClass": "System",
+									"sid": 719207549936474,
+									"parameters": {
+										"variable": "final"
+									}
+								}
+							],
+							"actions": [
+								{
+									"type": "script",
+									"script": "localVars.state = getState(runtime.globalVars.guess, runtime.globalVars.word, localVars.loopi);"
+								},
+								{
+									"id": "set-tile",
+									"objectClass": "colors",
+									"sid": 640332407965274,
+									"parameters": {
+										"tile-x": "loopindex",
+										"tile-y": "attempts",
+										"tile": "state",
+										"state": "normal"
+									}
+								}
+							],
+							"sid": 979133325898679
+						}
+					]
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-boolean-eventvar",
+							"objectClass": "System",
+							"sid": 575773803516586,
+							"parameters": {
+								"variable": "final"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "add-to-eventvar",
+							"objectClass": "System",
+							"sid": 359727703534140,
+							"parameters": {
+								"variable": "attempts",
+								"value": "1"
+							}
+						},
+						{
+							"id": "set-text",
+							"objectClass": "TextInput",
+							"sid": 518769565924997,
+							"parameters": {
+								"text": "\"\""
+							}
+						}
+					],
+					"sid": 458499222280582
+				}
+			]
+		},
+		{
+			"functionName": "canInput",
+			"functionDescription": "",
+			"functionCategory": "Game",
+			"functionReturnType": "number",
+			"functionIsAsync": false,
+			"functionParameters": [],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [],
+			"sid": 231346102462494,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-eventvar",
+							"objectClass": "System",
+							"sid": 307168788905837,
+							"parameters": {
+								"variable": "attempts",
+								"comparison": 0,
+								"value": "6"
+							}
+						},
+						{
+							"id": "compare-boolean-eventvar",
+							"objectClass": "System",
+							"sid": 227841280853356,
+							"parameters": {
+								"variable": "guessed"
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "set-function-return-value",
+							"objectClass": "Functions",
+							"sid": 764424896159248,
+							"parameters": {
+								"value": "0"
+							}
+						}
+					],
+					"sid": 476256949602090
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "else",
+							"objectClass": "System",
+							"sid": 305206276171499
+						},
+						{
+							"id": "layer-is-visible",
+							"objectClass": "System",
+							"sid": 595590822445555,
+							"parameters": {
+								"layer": "\"Pause\""
+							},
+							"isInverted": true
+						},
+						{
+							"id": "layer-is-visible",
+							"objectClass": "System",
+							"sid": 997527669182984,
+							"parameters": {
+								"layer": "\"Victory\""
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "set-function-return-value",
+							"objectClass": "Functions",
+							"sid": 592996005524840,
+							"parameters": {
+								"value": "1"
+							}
+						}
+					],
+					"sid": 656488320371926
+				}
+			]
 		}
 	],
 	"sid": 319189347676033

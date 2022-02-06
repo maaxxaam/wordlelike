@@ -1,9 +1,16 @@
 {
-	"name": "pauseBut",
+	"name": "keyBut",
 	"plugin-id": "Sprite",
-	"sid": 682187226789239,
+	"sid": 201126290605809,
 	"isGlobal": false,
-	"instanceVariables": [],
+	"instanceVariables": [
+		{
+			"name": "index",
+			"type": "number",
+			"desc": "",
+			"sid": 798672857813119
+		}
+	],
 	"behaviorTypes": [],
 	"effectTypes": [],
 	"animations": {
@@ -11,19 +18,19 @@
 			{
 				"frames": [
 					{
-						"width": 128,
-						"height": 128,
+						"width": 64,
+						"height": 64,
 						"originX": 0.5,
 						"originY": 0.5,
 						"originalSource": "",
 						"exportFormat": "png",
 						"exportQuality": 0.8,
-						"imageSpriteId": 3667640,
+						"imageSpriteId": 3673885,
 						"useCollisionPoly": true,
 						"duration": 1
 					}
 				],
-				"sid": 832800957589206,
+				"sid": 945198229284737,
 				"name": "Animation 1",
 				"isLooping": false,
 				"isPingPong": false,
