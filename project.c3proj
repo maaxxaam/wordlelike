@@ -179,7 +179,9 @@
 			"key_txt",
 			"key_txt_other",
 			"JSON",
-			"keyset"
+			"keyset",
+			"keystates",
+			"keyset_arr"
 		],
 		"subfolders": []
 	},

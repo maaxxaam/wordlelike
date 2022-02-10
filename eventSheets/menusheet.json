@@ -80,7 +80,7 @@
 			"actions": [
 				{
 					"id": "load",
-					"objectClass": "keyset",
+					"objectClass": "keyset_arr",
 					"sid": 173307711033509,
 					"parameters": {
 						"json": "AJAX.LastData"
@@ -137,6 +137,7 @@
 					"id": "compare-instance-variable",
 					"objectClass": "lvl_txt",
 					"sid": 863991265793901,
+					"disabled": true,
 					"parameters": {
 						"instance-variable": "index",
 						"comparison": 2,
@@ -291,7 +292,8 @@
 							}
 						}
 					],
-					"sid": 351809092340295
+					"sid": 351809092340295,
+					"disabled": true
 				}
 			]
 		},

@@ -1,6 +1,7 @@
 {
 	"russian": {
 		"rows": 3,
+		"letters": 32,
 		"appearance": [
 			{
 				"x": 256,
@@ -36,6 +37,7 @@
 	},
 	"english": {
 		"rows": 3,
+		"letters": 26,
 		"appearance": [
 			{
 				"x": 296,
@@ -68,5 +70,49 @@
 			"y": 560
 		},
 		"keyset": 1
+	},
+"numbers": {
+		"rows": 1,
+		"letters": 10,
+		"appearance": [
+			{
+				"x": 296,
+				"y": 536,
+				"wd": 480,
+				"ht": 32,
+				"letters": 10
+			}
+		],
+		"backspace": {
+			"x": 60,
+			"y": 560
+		},
+		"enter": {
+			"x": 380,
+			"y": 560
+		},
+		"keyset": 2
+	},
+	"colors": {
+		"rows": 1,
+		"letters": 9,
+		"appearance": [
+			{
+				"x": 296,
+				"y": 576,
+				"wd": 480,
+				"ht": 32,
+				"letters": 9
+			}
+		],
+		"backspace": {
+			"x": 20,
+			"y": 560
+		},
+		"enter": {
+			"x": 420,
+			"y": 560
+		},
+		"keyset": 3
 	}
 }

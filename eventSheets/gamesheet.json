@@ -73,7 +73,12 @@
 					}
 				}
 			],
-			"actions": [],
+			"actions": [
+				{
+					"type": "script",
+					"script": "runtime.globalVars.len_uni = len_unicode(guess)"
+				}
+			],
 			"sid": 415765890325905,
 			"children": [
 				{
@@ -82,9 +87,9 @@
 						{
 							"id": "compare-two-values",
 							"objectClass": "System",
-							"sid": 913844637475660,
+							"sid": 268151357447939,
 							"parameters": {
-								"first-value": "len(TextInput.Text)",
+								"first-value": "len_uni",
 								"comparison": 2,
 								"second-value": "letters_in_level"
 							}
@@ -176,6 +181,7 @@
 							"id": "set-eventvar-value",
 							"objectClass": "System",
 							"sid": 161112852465283,
+							"disabled": true,
 							"parameters": {
 								"variable": "UnlockedLvl",
 								"value": "UnlockedLvl = SelectedLvl ? UnlockedLvl + 1 : UnlockedLvl"
@@ -191,30 +197,58 @@
 							"id": "else",
 							"objectClass": "System",
 							"sid": 917462616159745
-						},
-						{
-							"id": "compare-two-values",
-							"objectClass": "System",
-							"sid": 697503197589151,
-							"parameters": {
-								"first-value": "Functions.canInput",
-								"comparison": 0,
-								"second-value": "1"
-							},
-							"isInverted": true
 						}
 					],
 					"actions": [
 						{
 							"id": "alert",
 							"objectClass": "Browser",
-							"sid": 506746583569329,
+							"sid": 433180056741414,
+							"disabled": true,
 							"parameters": {
-								"message": "\"Попыток не осталось!\""
+								"message": "word&newline&guess"
+							}
+						},
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 138139339435515,
+							"parameters": {
+								"variable": "guess",
+								"value": "\"\""
 							}
 						}
 					],
-					"sid": 319068621414388
+					"sid": 319068621414388,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-two-values",
+									"objectClass": "System",
+									"sid": 302210573692467,
+									"parameters": {
+										"first-value": "Functions.canInput",
+										"comparison": 0,
+										"second-value": "1"
+									},
+									"isInverted": true
+								}
+							],
+							"actions": [
+								{
+									"id": "alert",
+									"objectClass": "Browser",
+									"sid": 493325217452270,
+									"parameters": {
+										"message": "\"Попыток не осталось!\""
+									}
+								}
+							],
+							"sid": 315556390710669
+						}
+					]
 				}
 			]
 		},
@@ -258,7 +292,17 @@
 				{
 					"id": "set-eventvar-value",
 					"objectClass": "System",
+					"sid": 560409588445242,
+					"parameters": {
+						"variable": "guess",
+						"value": "\"\""
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
 					"sid": 270827886821418,
+					"disabled": true,
 					"parameters": {
 						"variable": "word",
 						"value": "uppercase(words.At(SelectedLvl, 0))"
@@ -267,11 +311,25 @@
 				{
 					"id": "set-eventvar-value",
 					"objectClass": "System",
-					"sid": 142992723670886,
+					"sid": 720890679390679,
+					"parameters": {
+						"variable": "word",
+						"value": "words.At(SelectedLvl, 0)"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 436276606606643,
+					"disabled": true,
 					"parameters": {
 						"variable": "letters_in_level",
-						"value": "len(word)"
+						"value": "Browser.ExecJS(\"len_unicode(runtime.globalVars.word)\")"
 					}
+				},
+				{
+					"type": "script",
+					"script": "runtime.globalVars.letters_in_level = len_unicode(runtime.globalVars.word);"
 				},
 				{
 					"id": "set-boolean-eventvar",
@@ -312,10 +370,44 @@
 					"parameters": [
 						"words.At(SelectedLvl, 1)"
 					]
+				},
+				{
+					"id": "alert",
+					"objectClass": "Browser",
+					"sid": 712407974925192,
+					"disabled": true,
+					"parameters": {
+						"message": "word"
+					}
 				}
 			],
 			"sid": 483854110980094,
 			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each-element",
+							"objectClass": "keystates",
+							"sid": 924968014466995,
+							"parameters": {
+								"axes": "x"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-at-x",
+							"objectClass": "keystates",
+							"sid": 961303400085934,
+							"parameters": {
+								"x": "keystates.CurX",
+								"value": "-1"
+							}
+						}
+					],
+					"sid": 868466255764651
+				},
 				{
 					"eventType": "block",
 					"conditions": [
@@ -899,10 +991,45 @@
 							"parameters": {
 								"seconds": "dt"
 							}
+						},
+						{
+							"id": "set-size",
+							"objectClass": "keyset",
+							"sid": 743374678803631,
+							"parameters": {
+								"width": "JSON.Get(\".letters\")",
+								"height": "1",
+								"depth": "1"
+							}
 						}
 					],
 					"sid": 227209085309056,
 					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "for-each-element",
+									"objectClass": "keyset",
+									"sid": 125623901531319,
+									"parameters": {
+										"axes": "x"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-at-x",
+									"objectClass": "keyset",
+									"sid": 208218249340422,
+									"parameters": {
+										"x": "keyset.CurX",
+										"value": "keyset_arr.At(keyset.CurX, JSON.Get(\".keyset\"))"
+									}
+								}
+							],
+							"sid": 899466059569216
+						},
 						{
 							"eventType": "block",
 							"conditions": [
@@ -976,8 +1103,17 @@
 									"id": "set-text",
 									"objectClass": "key_txt",
 									"sid": 124262590161016,
+									"disabled": true,
 									"parameters": {
 										"text": "uppercase(keyset.At(key_txt.IID, JSON.Get(\".keyset\")))"
+									}
+								},
+								{
+									"id": "set-text",
+									"objectClass": "key_txt",
+									"sid": 305901297872413,
+									"parameters": {
+										"text": "keyset.At(key_txt.IID)"
 									}
 								}
 							],
@@ -1012,6 +1148,7 @@
 					"id": "compare-two-values",
 					"objectClass": "System",
 					"sid": 950933030833151,
+					"disabled": true,
 					"parameters": {
 						"first-value": "len(TextInput.Text)",
 						"comparison": 2,
@@ -1031,22 +1168,65 @@
 			],
 			"actions": [
 				{
+					"type": "script",
+					"script": "runtime.globalVars.len_uni = len_unicode(runtime.globalVars.guess);"
+				},
+				{
 					"id": "append-text",
 					"objectClass": "TextInput",
 					"sid": 954198132159767,
+					"disabled": true,
 					"parameters": {
 						"text": "key_txt.Text"
 					}
 				},
 				{
-					"callFunction": "displayGuess",
-					"sid": 639772369101131,
-					"parameters": [
-						false
-					]
+					"id": "alert",
+					"objectClass": "Browser",
+					"sid": 175743123208683,
+					"disabled": true,
+					"parameters": {
+						"message": "key_txt.Text&newline&guess"
+					}
 				}
 			],
-			"sid": 314903799100308
+			"sid": 314903799100308,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-two-values",
+							"objectClass": "System",
+							"sid": 409430608320528,
+							"parameters": {
+								"first-value": "len_uni",
+								"comparison": 2,
+								"second-value": "letters_in_level"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 330097666391516,
+							"parameters": {
+								"variable": "guess",
+								"value": "guess&key_txt.Text"
+							}
+						},
+						{
+							"callFunction": "displayGuess",
+							"sid": 825833827180779,
+							"parameters": [
+								false
+							]
+						}
+					],
+					"sid": 512229478992301
+				}
+			]
 		},
 		{
 			"eventType": "block",
@@ -1073,7 +1253,7 @@
 			"actions": [
 				{
 					"type": "script",
-					"script": "var txt = runtime.objects.TextInput.getFirstInstance();\ntxt.text = txt.text.substr(0, txt.text.length - 1);"
+					"script": "//var txt = runtime.objects.TextInput.getFirstInstance();\n//txt.text = txt.text.substr(0, txt.text.length - 1);\n// \truntime.globalVars.guess.substr(0, runtime.globalVars.guess.length - 1);\nruntime.globalVars.guess = substr_unicode(runtime.globalVars.guess, 0, len_unicode(runtime.globalVars.guess) - 1);"
 				},
 				{
 					"callFunction": "displayGuess",
@@ -1084,6 +1264,16 @@
 				}
 			],
 			"sid": 849164397006394
+		},
+		{
+			"eventType": "variable",
+			"name": "len_uni",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 174637027448099
 		},
 		{
 			"functionName": "displayGuess",
@@ -1107,6 +1297,7 @@
 					"id": "set-eventvar-value",
 					"objectClass": "System",
 					"sid": 993256643539073,
+					"disabled": true,
 					"parameters": {
 						"variable": "guess",
 						"value": "uppercase(TextInput.Text)"
@@ -1114,7 +1305,7 @@
 				},
 				{
 					"type": "script",
-					"script": "runtime.globalVars.guess = runtime.globalVars.guess.substr(0, runtime.globalVars.letters_in_level)"
+					"script": "runtime.globalVars.guess = substr_unicode(runtime.globalVars.guess, 0, runtime.globalVars.letters_in_level);"
 				}
 			],
 			"sid": 690667926009031,
@@ -1185,83 +1376,143 @@
 					"sid": 247549983880515
 				},
 				{
+					"eventType": "variable",
+					"name": "state_str",
+					"type": "string",
+					"initialValue": "",
+					"comment": "",
+					"isStatic": false,
+					"isConstant": false,
+					"sid": 881025488648535
+				},
+				{
 					"eventType": "block",
 					"conditions": [
 						{
-							"id": "for",
+							"id": "trigger-once-while-true",
 							"objectClass": "System",
-							"sid": 475386553052445,
-							"parameters": {
-								"name": "\"guess\"",
-								"start-index": "0",
-								"end-index": "len(guess) = 0 ? 0: len(guess) - 1"
-							}
-						},
-						{
-							"id": "pick-nth-instance",
-							"objectClass": "System",
-							"sid": 915842048865049,
-							"parameters": {
-								"object": "Letter",
-								"instance": "loopindex(\"guess\") + attempts * letters_in_level"
-							}
+							"sid": 861075618766716
 						}
 					],
 					"actions": [
 						{
-							"id": "set-eventvar-value",
-							"objectClass": "System",
-							"sid": 805654152795795,
-							"parameters": {
-								"variable": "loopi",
-								"value": "loopindex"
-							}
-						},
-						{
 							"type": "script",
-							"script": "localVars.letter = runtime.globalVars.guess[localVars.loopi];"
-						},
-						{
-							"id": "set-text",
-							"objectClass": "Letter",
-							"sid": 686192156296518,
-							"parameters": {
-								"text": "letter"
-							}
+							"script": "runtime.globalVars.len_uni = len_unicode(runtime.globalVars.guess);\nlocalVars.state_str = \"0\".repeat(runtime.globalVars.len_uni);\nlocalVars.state_str = getState(runtime.globalVars.word, runtime.globalVars.guess, localVars.state_str);"
 						}
 					],
-					"sid": 351838723264141,
+					"sid": 738227413726229,
 					"children": [
 						{
 							"eventType": "block",
 							"conditions": [
 								{
-									"id": "compare-boolean-eventvar",
+									"id": "for",
 									"objectClass": "System",
-									"sid": 719207549936474,
+									"sid": 570080958363720,
 									"parameters": {
-										"variable": "final"
+										"name": "\"guess\"",
+										"start-index": "0",
+										"end-index": "len_uni = 0 ? 0: len_uni - 1"
+									}
+								},
+								{
+									"id": "pick-nth-instance",
+									"objectClass": "System",
+									"sid": 763150539830069,
+									"parameters": {
+										"object": "Letter",
+										"instance": "loopindex(\"guess\") + attempts * letters_in_level"
 									}
 								}
 							],
 							"actions": [
 								{
-									"type": "script",
-									"script": "localVars.state = getState(runtime.globalVars.guess, runtime.globalVars.word, localVars.loopi);"
+									"id": "set-eventvar-value",
+									"objectClass": "System",
+									"sid": 122375744853209,
+									"parameters": {
+										"variable": "loopi",
+										"value": "loopindex"
+									}
 								},
 								{
-									"id": "set-tile",
-									"objectClass": "colors",
-									"sid": 640332407965274,
+									"type": "script",
+									"script": "localVars.letter = get_unicode(runtime.globalVars.guess, localVars.loopi);"
+								},
+								{
+									"id": "alert",
+									"objectClass": "Browser",
+									"sid": 858312716493798,
+									"disabled": true,
 									"parameters": {
-										"tile-x": "loopindex",
-										"tile-y": "attempts",
-										"tile": "state",
-										"state": "normal"
+										"message": "letter"
+									}
+								},
+								{
+									"id": "set-text",
+									"objectClass": "Letter",
+									"sid": 123048349308061,
+									"parameters": {
+										"text": "letter"
 									}
 								}
 							],
-							"sid": 979133325898679
+							"sid": 371613614422575,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-boolean-eventvar",
+											"objectClass": "System",
+											"sid": 984584698684667,
+											"parameters": {
+												"variable": "final"
+											}
+										}
+									],
+									"actions": [
+										{
+											"type": "script",
+											"script": "//localVars.state = getState_old(runtime.globalVars.guess, runtime.globalVars.word, localVars.loopi);\n\nlocalVars.state = Number(localVars.state_str[localVars.loopi]);"
+										},
+										{
+											"id": "set-at-x",
+											"objectClass": "keystates",
+											"sid": 729525773772155,
+											"parameters": {
+												"x": "keyset.IndexOf(letter) = -1 ? int(letter) : keyset.IndexOf(letter)",
+												"value": "max(keystates.At((keyset.IndexOf(letter) = -1 ? int(letter) : keyset.IndexOf(letter))), state)"
+											}
+										},
+										{
+											"id": "alert",
+											"objectClass": "Browser",
+											"sid": 722199696561880,
+											"disabled": true,
+											"parameters": {
+												"message": "keyset.IndexOf(letter)&newline&letter"
+											}
+										},
+										{
+											"type": "script",
+											"script": ""
+										},
+										{
+											"id": "set-tile",
+											"objectClass": "colors",
+											"sid": 764861041684563,
+											"parameters": {
+												"tile-x": "loopindex",
+												"tile-y": "attempts",
+												"tile": "state",
+												"state": "normal"
+											}
+										}
+									],
+									"sid": 289905738371432
+								}
+							]
 						}
 					]
 				},
@@ -1291,9 +1542,14 @@
 							"id": "set-text",
 							"objectClass": "TextInput",
 							"sid": 518769565924997,
+							"disabled": true,
 							"parameters": {
 								"text": "\"\""
 							}
+						},
+						{
+							"callFunction": "updateKeyboard",
+							"sid": 590706285613917
 						}
 					],
 					"sid": 458499222280582
@@ -1387,6 +1643,37 @@
 					"sid": 656488320371926
 				}
 			]
+		},
+		{
+			"functionName": "updateKeyboard",
+			"functionDescription": "",
+			"functionCategory": "Game",
+			"functionReturnType": "none",
+			"functionIsAsync": false,
+			"functionParameters": [],
+			"eventType": "function-block",
+			"conditions": [
+				{
+					"id": "for-each",
+					"objectClass": "System",
+					"sid": 483508912444188,
+					"parameters": {
+						"object": "keyBut"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "set-animation",
+					"objectClass": "keyBut",
+					"sid": 742904979444973,
+					"parameters": {
+						"animation": "keystates.At(keyBut.IID) = -1 ? \"unused\" : keystates.At(keyBut.IID) = 0 ? \"notinword\" : keystates.At(keyBut.IID) = 1 ? \"wrongguess\" : \"good\"",
+						"from": "beginning"
+					}
+				}
+			],
+			"sid": 178275448935683
 		}
 	],
 	"sid": 319189347676033
